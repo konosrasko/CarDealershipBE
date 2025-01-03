@@ -62,6 +62,7 @@ public class CitizenServiceImpl implements CitizenService {
         citizenDTO.setFirstName(citizen.getFirstName());
         citizenDTO.setLastName(citizen.getLastName());
         citizenDTO.setEmail(citizen.getEmail());
+        citizenDTO.setPassword(citizen.getPassword());
         return citizenDTO;
     }
 }

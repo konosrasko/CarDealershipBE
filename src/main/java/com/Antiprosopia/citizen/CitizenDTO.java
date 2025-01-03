@@ -1,11 +1,15 @@
 package com.Antiprosopia.citizen;
 
+import lombok.Data;
+
+@Data
 public class CitizenDTO {
     private Integer citizenId;
     private String afm;
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
 
     // Getters and Setters
     public Integer getCitizenId() {
@@ -49,6 +53,6 @@ public class CitizenDTO {
     }
 
     public String getPassword() {
-        return null;
+        return this.password;
     }
 }

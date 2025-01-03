@@ -26,7 +26,7 @@ public class Car {
     @Column(nullable = false)
     private Integer seats;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false, precision = 10)
     private Double price;
 
     @Column(columnDefinition = "TEXT")
@@ -38,8 +38,5 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "dealership_id", nullable = false)
     private Dealership dealership;
-
-    public void setDealershipId(Integer dealershipId) {
-    }
 
 }

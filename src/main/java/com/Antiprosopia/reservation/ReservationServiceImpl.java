@@ -1,6 +1,7 @@
 package com.Antiprosopia.reservation;
 
 
+import com.Antiprosopia.car.CarRepository;
 import com.Antiprosopia.citizen.CitizenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,14 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private CitizenRepository citizenRepository;
 
+    @Autowired
+    private CarRepository carRepository;
+
     @Override
     public ReservationDTO createReservation(ReservationDTO reservationDTO) {
         Reservation reservation = new Reservation();
         reservation.setCitizen(citizenRepository.findById(reservationDTO.getCitizenId()).orElseThrow(() -> new NullPointerException()));
-        reservation.setCarId(reservationDTO.getCarId());
+        reservation.setCar(carRepository.findById(reservationDTO.getCarId()).orElseThrow(() -> new NullPointerException()));
         reservation.setReservationDate(reservationDTO.getReservationDate());
         reservation.setReservationTime(reservationDTO.getReservationTime());
         Reservation savedReservation = reservationRepository.save(reservation);
@@ -50,8 +54,8 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationDTO mapToDTO(Reservation reservation) {
         ReservationDTO reservationDTO = new ReservationDTO();
         reservationDTO.setReservationId(reservation.getReservationId());
-        reservationDTO.setCitizenId(reservation.getCitizenId());
-        reservationDTO.setCarId(reservation.getCarId());
+        reservationDTO.setCitizenId(reservation.getCitizen().getCitizenId());
+        reservationDTO.setCarId(reservation.getCar().getCarId());
         reservationDTO.setReservationDate(reservation.getReservationDate());
         reservationDTO.setReservationTime(reservation.getReservationTime());
         return reservationDTO;

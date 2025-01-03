@@ -1,10 +1,14 @@
 package com.Antiprosopia.dealership;
 
+import lombok.Data;
+
+@Data
 public class DealershipDTO {
     private Integer dealershipId;
     private String afm;
     private String name;
     private String owner;
+    private String password;
 
     // Getters and Setters
     public Integer getDealershipId() {
@@ -39,7 +43,4 @@ public class DealershipDTO {
         this.owner = owner;
     }
 
-    public String getPassword() {
-        return null;
-    }
 }
