@@ -32,7 +32,6 @@ public class MainController {
     private ReservationService reservationService;
 
     // Εγγραφή Πολίτη
-    @PreAuthorize("hasRole('ROLE_CITIZEN')")
     @PostMapping("/citizen/signup")
     public ResponseEntity<CitizenDTO> signUpCitizen(@RequestBody CitizenDTO citizenDTO) {
         CitizenDTO registeredCitizen = citizenService.createCitizen(citizenDTO);
@@ -40,7 +39,6 @@ public class MainController {
     }
 
     // Εγγραφή Αντιπροσωπείας
-    @PreAuthorize("hasRole('ROLE_DEALERSHIP')")
     @PostMapping("/dealership/signup")
     public ResponseEntity<DealershipDTO> signUpDealership(@RequestBody DealershipDTO dealershipDTO) {
         DealershipDTO registeredDealership = dealershipService.createDealership(dealershipDTO);

@@ -25,6 +25,12 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/api/dealership/signup").permitAll()
+                .requestMatchers("/api/citizen/signup").permitAll()
+                .requestMatchers("/api/reservation/test-drive").hasAnyAuthority(UserRole.ROLE_CITIZEN.name())
+                .requestMatchers("/api/purchase").hasAnyAuthority(UserRole.ROLE_CITIZEN.name())
+                .requestMatchers("/api/car/add").hasAnyAuthority(UserRole.ROLE_DEALERSHIP.name())
+                .requestMatchers("/api/car/renew/**").hasAnyAuthority(UserRole.ROLE_DEALERSHIP.name())
                 .anyRequest().authenticated();
         return http.build();
     }
