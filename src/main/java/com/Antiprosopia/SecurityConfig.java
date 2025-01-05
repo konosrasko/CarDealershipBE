@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/api/dealership/signup").permitAll()
                 .requestMatchers("/api/citizen/signup").permitAll()
                 .requestMatchers("/api/reservation/test-drive").hasAnyAuthority(UserRole.ROLE_CITIZEN.name())

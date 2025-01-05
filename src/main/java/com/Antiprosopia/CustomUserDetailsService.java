@@ -50,7 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         throw new UsernameNotFoundException("User not found with AFM: " + afm);
     }
 
-    public String login(String afm, String password) throws Exception {
+    public AuthenticationResponse login(String afm, String password) throws Exception {
         UserDetails userDetails = loadUserByUsername(afm);
 
         // Ελέγχουμε αν το password αντιστοιχεί
@@ -62,7 +62,9 @@ public class CustomUserDetailsService implements UserDetailsService {
                     .orElse("ROLE_UNKNOWN");
 
             // Δημιουργούμε το JWT με τον ρόλο
-            return jwtUtil.generateToken(afm, role);
+
+            String token = jwtUtil.generateToken(afm, role);
+            return AuthenticationResponse.builder().token(token).message("Welcome").build();
         } else {
             throw new Exception("Invalid credentials");
         }

@@ -21,14 +21,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String afm, @RequestParam String password) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestParam String afm, @RequestParam String password) {
         try {
-            String token = userDetailsService.login(afm, password);
-            return ResponseEntity.ok(token);
+            AuthenticationResponse token = userDetailsService.login(afm, password);
+            return ResponseEntity.ok().body(token);
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            AuthenticationResponse resp = AuthenticationResponse.builder().token("").message("error").build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resp);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 }
