@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class CarContoller {
 
     @Autowired
@@ -19,6 +18,5 @@ public class CarContoller {
     public List<CarDTO> getCars() {
         return carService.getAllCars();
     }
-
 
 }
