@@ -20,13 +20,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http.cors().and()
                 .csrf().disable()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/api/dealership/signup").permitAll()
                 .requestMatchers("/api/citizen/signup").permitAll()
+                .requestMatchers("/api/cars").permitAll()
                 .requestMatchers("/api/reservation/test-drive").hasAnyAuthority(UserRole.ROLE_CITIZEN.name())
                 .requestMatchers("/api/purchase").hasAnyAuthority(UserRole.ROLE_CITIZEN.name())
                 .requestMatchers("/api/car/add").hasAnyAuthority(UserRole.ROLE_DEALERSHIP.name())
