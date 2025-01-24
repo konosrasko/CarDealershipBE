@@ -9,11 +9,15 @@ import com.Antiprosopia.dealership.DealershipService;
 import com.Antiprosopia.reservation.ReservationDTO;
 import com.Antiprosopia.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -83,13 +87,12 @@ public class MainController {
     // Αγορά Αυτοκινήτου (κατόπιν ελέγχου διαθεσιμότητας)
     @PreAuthorize("hasRole('ROLE_CITIZEN')")
     @PostMapping("/purchase")
-    public ResponseEntity<String> purchaseCar(@RequestParam Integer citizenId, @RequestParam Integer carId) {
-        boolean isAvailable = carService.checkCarAvailability(carId);
-        if (isAvailable) {
-            carService.purchaseCar(citizenId, carId);
-            return ResponseEntity.ok("Purchase successful");
-        } else {
-            return ResponseEntity.status(400).body("Car is not available for purchase");
-        }
+    public ResponseEntity<String> purchaseCar(@RequestParam Integer carId) {
+            carService.purchaseCar(carId);
+            if (carService.isCarOutOfStock(carId)){
+                carService.deleteCar(carId);
+            }
+            return ResponseEntity.ok().body("{\"message\": \"Purchase successful\"}");
+
     }
 }

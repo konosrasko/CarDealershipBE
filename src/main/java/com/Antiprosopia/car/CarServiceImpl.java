@@ -73,14 +73,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public boolean checkCarAvailability(Integer carId) {
-        Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
-        return true;
+    public boolean isCarOutOfStock(Integer carId) {
+        Car car = carRepository.findById(carId).orElseThrow(() -> new RuntimeException("Car not found"));
+        return car.getQuantity() == 0;
     }
 
     @Override
-    public void purchaseCar(Integer citizenId, Integer carId) {
+    public void purchaseCar(Integer carId) {
         Car car = carRepository.findById(carId).get();
         car.setQuantity(car.getQuantity() - 1);
         carRepository.save(car);

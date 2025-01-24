@@ -12,7 +12,7 @@ public interface CarService {
     List<CarDTO> getAllCars();
     void deleteCar(Integer carId);
 
-    boolean checkCarAvailability(Integer carId);
+    boolean isCarOutOfStock(Integer carId);
 
-    void purchaseCar(Integer citizenId, Integer carId);
+    void purchaseCar(Integer carId);
 }

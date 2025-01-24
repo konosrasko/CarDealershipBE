@@ -28,9 +28,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/dealership/signup").permitAll()
                 .requestMatchers("/api/citizen/signup").permitAll()
                 .requestMatchers("/api/cars").permitAll()
+                .requestMatchers("/api/user/role/dealership").hasAnyAuthority(UserRole.ROLE_DEALERSHIP.name())
                 .requestMatchers("/api/reservation/test-drive").hasAnyAuthority(UserRole.ROLE_CITIZEN.name())
-                .requestMatchers("/api/purchase").hasAnyAuthority(UserRole.ROLE_CITIZEN.name())
-                .requestMatchers("/api/car/add").hasAnyAuthority(UserRole.ROLE_DEALERSHIP.name())
+                .requestMatchers("/api/purchase").permitAll()
+                .requestMatchers("/api/car/add").permitAll()
                 .requestMatchers("/api/car/renew/**").hasAnyAuthority(UserRole.ROLE_DEALERSHIP.name())
                 .anyRequest().authenticated();
         return http.build();
