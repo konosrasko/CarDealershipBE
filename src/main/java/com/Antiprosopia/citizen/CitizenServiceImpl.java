@@ -55,6 +55,12 @@ public class CitizenServiceImpl implements CitizenService {
         citizenRepository.deleteById(citizenId);
     }
 
+    @Override
+    public Citizen findByAfm(String afm) {
+        var citizen = citizenRepository.findByAfm(afm);
+        return citizen.orElse(null);
+    }
+
     private CitizenDTO mapToDTO(Citizen citizen) {
         CitizenDTO citizenDTO = new CitizenDTO();
         citizenDTO.setCitizenId(citizen.getCitizenId());

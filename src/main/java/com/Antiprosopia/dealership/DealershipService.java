@@ -8,4 +8,5 @@ public interface DealershipService {
     DealershipDTO getDealershipById(Integer dealershipId);
     List<DealershipDTO> getAllDealerships();
     void deleteDealership(Integer dealershipId);
+    Dealership findByAfm(String afm);
 }

@@ -8,4 +8,5 @@ public interface CitizenService {
     CitizenDTO getCitizenById(Integer citizenId);
     List<CitizenDTO> getAllCitizens();
     void deleteCitizen(Integer citizenId);
+    Citizen findByAfm(String afm);
 }

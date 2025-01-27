@@ -79,9 +79,9 @@ public class MainController {
     // Κράτηση Test Drive (κατόπιν ελέγχου διαθεσιμότητας)
     @PreAuthorize("hasRole('ROLE_CITIZEN')")
     @PostMapping("/reservation/test-drive")
-    public ResponseEntity<ReservationDTO> reserveTestDrive(@RequestBody ReservationDTO reservationDTO) {
-        ReservationDTO reservedTestDrive = reservationService.createReservation(reservationDTO);
-        return ResponseEntity.ok(reservedTestDrive);
+    public ResponseEntity<String> reserveTestDrive(@RequestBody ReservationDTO reservationDTO) {
+        reservationService.createReservation(reservationDTO);
+        return ResponseEntity.ok().body("{\"message\": \"Reservation successful\"}");
     }
 
     // Αγορά Αυτοκινήτου (κατόπιν ελέγχου διαθεσιμότητας)
@@ -93,6 +93,16 @@ public class MainController {
                 carService.deleteCar(carId);
             }
             return ResponseEntity.ok().body("{\"message\": \"Purchase successful\"}");
+    }
 
+    // Αναζήτηση Αυτοκινήτου με πολλαπλά κριτήρια
+    @PreAuthorize("hasRole('ROLE_CITIZEN') or hasRole('ROLE_DEALERSHIP')")
+    @GetMapping("/get-id")
+    public Integer getId(@RequestParam String afm) {
+        if(citizenService.findByAfm(afm) != null){
+            return citizenService.findByAfm(afm).getCitizenId();
+        }else{
+            return dealershipService.findByAfm(afm).getDealershipId();
+        }
     }
 }

@@ -54,6 +54,12 @@ public class DealershipServiceImpl implements DealershipService {
         dealershipRepository.deleteById(dealershipId);
     }
 
+    @Override
+    public Dealership findByAfm(String afm) {
+        var dealership = dealershipRepository.findByAfm(afm);
+        return dealership.orElse(null);
+    }
+
     private DealershipDTO mapToDTO(Dealership dealership) {
         DealershipDTO dealershipDTO = new DealershipDTO();
         dealershipDTO.setDealershipId(dealership.getDealershipId());
