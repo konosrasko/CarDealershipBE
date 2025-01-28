@@ -68,6 +68,11 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<Car> getAllCarsForDealership(Integer dealerId) {
+        return carRepository.getAllCarsForDealership(dealerId);
+    }
+
+    @Override
     public void deleteCar(Integer carId) {
         carRepository.deleteById(carId);
     }

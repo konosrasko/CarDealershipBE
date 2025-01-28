@@ -10,6 +10,7 @@ public interface CarService {
     CarDTO updateCar(Integer carId, Integer quantity);
     CarDTO getCarById(Integer carId);
     List<CarDTO> getAllCars();
+    List<Car> getAllCarsForDealership(Integer dealerId);
     void deleteCar(Integer carId);
 
     boolean isCarOutOfStock(Integer carId);

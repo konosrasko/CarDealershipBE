@@ -7,7 +7,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Integer> {
-    List<Car> findByDealership_DealershipId(Integer dealershipId);
+
+    @Query("SELECT c FROM Car c WHERE c.dealership.dealershipId = :dealershipId")
+    List<Car> getAllCarsForDealership(Integer dealershipId);
     List<Car> findByBrand(String brand);
 
     @Query("SELECT c FROM Car c WHERE " +

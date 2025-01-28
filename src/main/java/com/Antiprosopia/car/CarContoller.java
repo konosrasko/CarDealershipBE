@@ -22,6 +22,11 @@ public class CarContoller {
         return carService.getAllCars();
     }
 
+    @GetMapping("/carsForDelearship")
+    public List<Car> getCarsForDealer(@RequestParam Integer dealerID) {
+        return carService.getAllCarsForDealership(dealerID);
+    }
+
     @PreAuthorize("hasRole('ROLE_DEALERSHIP')")
     @DeleteMapping("/delete")
     public ResponseEntity<Map<String, String>> deleteCar(@RequestParam Integer carId) {
