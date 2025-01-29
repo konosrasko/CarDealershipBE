@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/purchase").permitAll()
                 .requestMatchers("/api/carData").permitAll()
                 .requestMatchers("/api/car/update").permitAll()
+                .requestMatchers("/api/reservations").permitAll()
                 .requestMatchers("/api/get-id").permitAll()
                 .requestMatchers("/api/delete").permitAll()
                 .requestMatchers("/api/car/add").permitAll()

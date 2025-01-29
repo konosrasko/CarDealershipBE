@@ -81,8 +81,12 @@ public class MainController {
     @PreAuthorize("hasRole('ROLE_CITIZEN')")
     @PostMapping("/reservation/test-drive")
     public ResponseEntity<String> reserveTestDrive(@RequestBody ReservationDTO reservationDTO) {
-        reservationService.createReservation(reservationDTO);
-        return ResponseEntity.ok().body("{\"message\": \"Reservation successful\"}");
+        if (reservationService.checkIfReservationExist(reservationDTO)) {
+            reservationService.createReservation(reservationDTO);
+            return ResponseEntity.ok().body("{\"message\": \"Reservation successful\"}");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \"Reservation can not be done. Please Select another Date\"}");
+
     }
 
     // Αγορά Αυτοκινήτου (κατόπιν ελέγχου διαθεσιμότητας)

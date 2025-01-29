@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -39,16 +38,19 @@ public class ReservationServiceImpl implements ReservationService {
         return mapToDTO(reservation);
     }
 
-    @Override
-    public List<ReservationDTO> getAllReservations() {
-        return reservationRepository.findAll().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public List<Reservation> getAllCitizensReservations(Integer citizenId) {
+        return reservationRepository.findByCitizen_CitizenId(citizenId);
     }
 
     @Override
     public void deleteReservation(Integer reservationId) {
         reservationRepository.deleteById(reservationId);
+    }
+
+    @Override
+    public boolean checkIfReservationExist(ReservationDTO reservationDTO) {
+        List<Reservation> list = reservationRepository.findIfThereIsReservation(reservationDTO.getCarId(),reservationDTO.getReservationDate(),reservationDTO.getReservationTime());
+        return list.isEmpty();
     }
 
     private ReservationDTO mapToDTO(Reservation reservation) {
