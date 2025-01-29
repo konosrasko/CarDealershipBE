@@ -42,4 +42,9 @@ public class CarContoller {
         }
     }
 
+    @GetMapping("/carData")
+    public Car getSingleCarData(@RequestParam Integer carID) {
+        return carService.getCarById(carID);
+    }
+
 }

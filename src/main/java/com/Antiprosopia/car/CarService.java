@@ -7,8 +7,8 @@ public interface CarService {
     List<CarDTO> searchCars(String brand, String model, Double maxPrice);
 
     CarDTO createCar(CarDTO carDTO);
-    CarDTO updateCar(Integer carId, Integer quantity);
-    CarDTO getCarById(Integer carId);
+    CarDTO updateCar(Integer carId, Car carUpdated);
+    Car getCarById(Integer carId);
     List<CarDTO> getAllCars();
     List<Car> getAllCarsForDealership(Integer dealerId);
     void deleteCar(Integer carId);

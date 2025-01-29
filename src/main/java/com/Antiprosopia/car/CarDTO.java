@@ -10,7 +10,7 @@ public class CarDTO {
     private Double price;
     private String additionalInfo;
     private Integer quantity;
-    private Integer dealershipId;
+    private Integer dealership;
 
     // Getters and Setters
     public Integer getCarId() {
@@ -86,10 +86,10 @@ public class CarDTO {
     }
 
     public Integer getDealershipId() {
-        return dealershipId;
+        return dealership;
     }
 
     public void setDealershipId(Integer dealershipId) {
-        this.dealershipId = dealershipId;
+        this.dealership = dealershipId;
     }
 }

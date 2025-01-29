@@ -1,5 +1,6 @@
 package com.Antiprosopia;
 
+import com.Antiprosopia.car.Car;
 import com.Antiprosopia.car.CarDTO;
 import com.Antiprosopia.car.CarService;
 import com.Antiprosopia.citizen.CitizenDTO;
@@ -59,9 +60,9 @@ public class MainController {
 
     // Ανανέωση Αριθμού Αυτοκινήτου (για συγκεκριμένο μοντέλο)
     @PreAuthorize("hasRole('ROLE_DEALERSHIP')")
-    @PutMapping("/car/renew/{carId}")
-    public ResponseEntity<CarDTO> updateCarQuantity(@PathVariable Integer carId, @RequestParam Integer quantity) {
-        CarDTO updatedCar = carService.updateCar(carId, quantity);
+    @PutMapping("/car/update")
+    public ResponseEntity<CarDTO> updateCar(@RequestParam Integer carId,@RequestBody Car carUpdated) {
+        CarDTO updatedCar = carService.updateCar(carId, carUpdated);
         return ResponseEntity.ok(updatedCar);
     }
 
@@ -95,7 +96,6 @@ public class MainController {
             return ResponseEntity.ok().body("{\"message\": \"Purchase successful\"}");
     }
 
-    // Αναζήτηση Αυτοκινήτου με πολλαπλά κριτήρια
     @PreAuthorize("hasRole('ROLE_CITIZEN') or hasRole('ROLE_DEALERSHIP')")
     @GetMapping("/get-id")
     public Integer getId(@RequestParam String afm) {

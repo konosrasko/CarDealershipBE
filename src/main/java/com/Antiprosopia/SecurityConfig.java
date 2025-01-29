@@ -32,6 +32,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/user/role/dealership").hasAnyAuthority(UserRole.ROLE_DEALERSHIP.name())
                 .requestMatchers("/api/reservation/test-drive").permitAll()
                 .requestMatchers("/api/purchase").permitAll()
+                .requestMatchers("/api/carData").permitAll()
+                .requestMatchers("/api/car/update").permitAll()
                 .requestMatchers("/api/get-id").permitAll()
                 .requestMatchers("/api/delete").permitAll()
                 .requestMatchers("/api/car/add").permitAll()

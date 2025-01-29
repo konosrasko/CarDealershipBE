@@ -45,19 +45,15 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarDTO updateCar(Integer carId, Integer quantity) {
-        Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
-        car.setQuantity(quantity);
-        Car updatedCar = carRepository.save(car);
+    public CarDTO updateCar(Integer carId, Car carUpdated) {
+        Car updatedCar = carRepository.save(carUpdated);
         return mapToDTO(updatedCar);
     }
 
     @Override
-    public CarDTO getCarById(Integer carId) {
-        Car car = carRepository.findById(carId)
+    public Car getCarById(Integer carId) {
+        return carRepository.findById(carId)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
-        return mapToDTO(car);
     }
 
     @Override
