@@ -1,5 +1,6 @@
 package com.Antiprosopia.car;
 
+import com.Antiprosopia.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ public class CarContoller {
     @Autowired
     private CarService carService;
 
+    @PreAuthorize("hasRole('ROLE_CITIZEN')")
     @GetMapping("/cars")
     public List<CarDTO> getCars() {
         return carService.getAllCars();
@@ -29,17 +31,9 @@ public class CarContoller {
 
     @PreAuthorize("hasRole('ROLE_DEALERSHIP')")
     @DeleteMapping("/delete")
-    public ResponseEntity<Map<String, String>> deleteCar(@RequestParam Integer carId) {
-        try {
-            carService.deleteCar(carId);
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Deleted successfully");
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            // Handle specific exceptions if necessary
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", e.getMessage()));
-        }
+    public ResponseEntity<ResponseDTO> deleteCar(@RequestParam Integer carId) {
+        carService.deleteCar(carId);
+        return ResponseEntity.ok(new ResponseDTO("Deleted successfully"));
     }
 
     @GetMapping("/carData")
@@ -47,4 +41,27 @@ public class CarContoller {
         return carService.getCarById(carID);
     }
 
+    @PreAuthorize("hasRole('ROLE_CITIZEN')")
+    @PostMapping("/purchase")
+    public ResponseEntity<ResponseDTO> purchaseCar(@RequestParam Integer carId) {
+        carService.purchaseCar(carId);
+        if (carService.isCarOutOfStock(carId)) {
+            carService.deleteCar(carId);
+        }
+        return ResponseEntity.ok(new ResponseDTO("Purchase successful"));
+    }
+
+    @PreAuthorize("hasRole('ROLE_DEALERSHIP')")
+    @PostMapping("/car/add")
+    public ResponseEntity<CarDTO> addCar(@RequestBody CarDTO carDTO) {
+        CarDTO addedCar = carService.createCar(carDTO);
+        return ResponseEntity.ok(addedCar);
+    }
+
+    @PreAuthorize("hasRole('ROLE_DEALERSHIP')")
+    @PutMapping("/car/update")
+    public ResponseEntity<CarDTO> updateCar(@RequestParam Integer carId,@RequestBody Car carUpdated) {
+        CarDTO updatedCar = carService.updateCar(carId, carUpdated);
+        return ResponseEntity.ok(updatedCar);
+    }
 }

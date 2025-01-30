@@ -70,7 +70,8 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteCar(Integer carId) {
-        carRepository.deleteById(carId);
+        Car car = carRepository.findById(carId).orElseThrow(() -> new CarException("Car with ID " + carId + " not found"));
+        carRepository.delete(car);
     }
 
     @Override

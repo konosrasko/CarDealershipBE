@@ -37,37 +37,19 @@ public class MainController {
     @Autowired
     private ReservationService reservationService;
 
-    // Εγγραφή Πολίτη
     @PostMapping("/citizen/signup")
     public ResponseEntity<CitizenDTO> signUpCitizen(@RequestBody CitizenDTO citizenDTO) {
         CitizenDTO registeredCitizen = citizenService.createCitizen(citizenDTO);
         return ResponseEntity.ok(registeredCitizen);
     }
 
-    // Εγγραφή Αντιπροσωπείας
     @PostMapping("/dealership/signup")
     public ResponseEntity<DealershipDTO> signUpDealership(@RequestBody DealershipDTO dealershipDTO) {
         DealershipDTO registeredDealership = dealershipService.createDealership(dealershipDTO);
         return ResponseEntity.ok(registeredDealership);
     }
 
-    // Προσθήκη Αυτοκινήτου (Αντιπροσωπεία)
-    @PreAuthorize("hasRole('ROLE_DEALERSHIP')")
-    @PostMapping("/car/add")
-    public ResponseEntity<CarDTO> addCar(@RequestBody CarDTO carDTO) {
-        CarDTO addedCar = carService.createCar(carDTO);
-        return ResponseEntity.ok(addedCar);
-    }
 
-    // Ανανέωση Αριθμού Αυτοκινήτου (για συγκεκριμένο μοντέλο)
-    @PreAuthorize("hasRole('ROLE_DEALERSHIP')")
-    @PutMapping("/car/update")
-    public ResponseEntity<CarDTO> updateCar(@RequestParam Integer carId,@RequestBody Car carUpdated) {
-        CarDTO updatedCar = carService.updateCar(carId, carUpdated);
-        return ResponseEntity.ok(updatedCar);
-    }
-
-    // Αναζήτηση Αυτοκινήτου με πολλαπλά κριτήρια
     @PreAuthorize("hasRole('ROLE_CITIZEN') or hasRole('ROLE_DEALERSHIP')")
     @GetMapping("/car/search")
     public ResponseEntity<List<CarDTO>> searchCars(
@@ -76,19 +58,6 @@ public class MainController {
             @RequestParam(required = false) Double maxPrice) {
         List<CarDTO> cars = carService.searchCars(brand, model, maxPrice);
         return ResponseEntity.ok(cars);
-    }
-
-
-
-    // Αγορά Αυτοκινήτου (κατόπιν ελέγχου διαθεσιμότητας)
-    @PreAuthorize("hasRole('ROLE_CITIZEN')")
-    @PostMapping("/purchase")
-    public ResponseEntity<String> purchaseCar(@RequestParam Integer carId) {
-            carService.purchaseCar(carId);
-            if (carService.isCarOutOfStock(carId)){
-                carService.deleteCar(carId);
-            }
-            return ResponseEntity.ok().body("{\"message\": \"Purchase successful\"}");
     }
 
     @PreAuthorize("hasRole('ROLE_CITIZEN') or hasRole('ROLE_DEALERSHIP')")
