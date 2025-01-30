@@ -8,6 +8,7 @@ import com.Antiprosopia.citizen.CitizenService;
 import com.Antiprosopia.dealership.DealershipDTO;
 import com.Antiprosopia.dealership.DealershipService;
 import com.Antiprosopia.reservation.ReservationDTO;
+import com.Antiprosopia.reservation.ReservationException;
 import com.Antiprosopia.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -77,17 +78,7 @@ public class MainController {
         return ResponseEntity.ok(cars);
     }
 
-    // Κράτηση Test Drive (κατόπιν ελέγχου διαθεσιμότητας)
-    @PreAuthorize("hasRole('ROLE_CITIZEN')")
-    @PostMapping("/reservation/test-drive")
-    public ResponseEntity<String> reserveTestDrive(@RequestBody ReservationDTO reservationDTO) {
-        if (reservationService.checkIfReservationExist(reservationDTO)) {
-            reservationService.createReservation(reservationDTO);
-            return ResponseEntity.ok().body("{\"message\": \"Reservation successful\"}");
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \"Reservation can not be done. Please Select another Date\"}");
 
-    }
 
     // Αγορά Αυτοκινήτου (κατόπιν ελέγχου διαθεσιμότητας)
     @PreAuthorize("hasRole('ROLE_CITIZEN')")
