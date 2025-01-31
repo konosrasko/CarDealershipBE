@@ -1,5 +1,7 @@
 package com.Antiprosopia.car;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CarDTO {
     private Integer carId;
     private String brand;
@@ -10,6 +12,7 @@ public class CarDTO {
     private Double price;
     private String additionalInfo;
     private Integer quantity;
+    @JsonProperty("dealership")
     private Integer dealership;
 
     // Getters and Setters
